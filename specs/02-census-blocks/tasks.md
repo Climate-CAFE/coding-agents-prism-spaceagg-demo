@@ -1,0 +1,13 @@
+# Tasks: Census block boundaries and population (2020, Washington)
+
+Check a box only after its definition of done runs.
+
+- [x] **T01 — Config and packages.** Serves: D8, AC9. Depends: none. Files: `environment.yaml`, `conf/census.yaml`, `conf/datapaths.yaml`, `conf/config.yaml`. DoD: `geopandas`, `pyogrio`, `pyarrow` installed in `prism-spaceagg`; Hydra composes `census.vintage`, `census.state_fips`, `paths.intermediate_root`. DoD met: packages installed (geopandas 1.2.0, pyogrio 0.13.0, pyarrow 19.0.1); Hydra composes census config.
+- [x] **T02 — Download.** Serves: D1, D9, AC1. Depends: T01. File: `src/census_blocks.py` (`fetch_raw_zip`). DoD: raw ZIP at `data/raw/census/2020/53/tl_2020_53_tabblock20.zip`; passes `check_zip`; skip rule works on rerun. DoD met: raw ZIP at the configured path, SHA-256 in QC JSON; reused `fetch_file`.
+- [x] **T03 — Transform.** Serves: D2, D3. Depends: T02. File: `src/census_blocks.py` (`build_blocks`). DoD: six columns built from `POP20`, `GEOID20`, `STATEFP20`, `COUNTYFP20`; no reprojection. DoD met: six columns, no reprojection; verified against source.
+- [x] **T04 — QC.** Serves: D4, D5, D6. Depends: T03. File: `src/qc.py` (Feature 2 section). DoD: `check_essential` and `check_reference` implemented; reference `null` gives `skipped` with a warning. DoD met: `check_essential` and `check_reference` (tests + real run).
+- [x] **T05 — Publish.** Serves: D5, D7, D8. Depends: T04. File: `src/census_blocks.py`. DoD: GeoParquet and QC JSON written atomically; essential failure writes no GeoParquet and exits non-zero. DoD met: GeoParquet and QC JSON published atomically; failure test publishes nothing.
+- [x] **T06 — Snakefile.** Serves: D10. Depends: T05. File: `Snakefile`. DoD: wildcard rule `census_blocks` with targets from `conf/census.yaml`; `snakemake -n` plans the Census job and the PRISM job separately. DoD met: `snakemake -n` plans the Census job; PRISM job unchanged.
+- [x] **T07 — Tests.** Serves: AC1–AC7, AC10. Depends: T05. File: `tests/test_census_blocks.py` (3 tests). DoD: `pytest` passes, including Feature 1's five tests. DoD met: `pytest` 8 passed (5 Feature 1 + 3 Feature 2).
+- [x] **T08 — Real run.** Serves: AC1–AC8. Depends: T06, T07. DoD: population 7,705,281; 39 counties; CRS `EPSG:4269`; row count matches source; QC JSON `pass`; rerun plans no Census job; PRISM rerun plan unchanged. DoD met 2026-10-28: population 7,705,281; 39 counties; CRS EPSG:4269; 158,093 rows equal source; QC `pass`; rerun plans nothing.
+- [x] **T09 — Config audit.** Serves: AC9. Depends: T08. DoD: grep of `src/` and `Snakefile` finds no vintage, FIPS, URL, CRS, or reference value outside `conf/`. DoD met: grep of `src/` and `Snakefile` finds no vintage, FIPS, URL, CRS, or reference value.

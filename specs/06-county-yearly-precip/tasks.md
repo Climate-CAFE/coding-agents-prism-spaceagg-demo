@@ -1,0 +1,13 @@
+# Tasks: Yearly county precipitation and map
+
+Check a box only after its definition of done runs.
+
+- [x] **T01 — Config.** Serves: D4, D11. Files: `conf/census.yaml` (add `state_name`). DoD: Hydra composes `census.state_name`; no new config file. DoD met: `census.state_name` added; no new config file.
+- [x] **T02 — Inputs and outlines.** Serves: D1, D8. File: `src/yearly_precip.py`. DoD: daily Parquet read; county outlines dissolved from Feature 2 blocks; one valid polygon per county. DoD met: daily Parquet read; outlines dissolved from Feature 2 blocks (39 polygons, valid).
+- [x] **T03 — Yearly values.** Serves: D2–D5. File: `src/yearly_precip.py`. DoD: `precip_total_mm` = sum of daily means; `precip_mean_mm` = total ÷ days_expected; `days_observed`, `days_expected`, `population` (constant Census total). DoD met: totals are sums of daily means; means are totals ÷ 366; population constant.
+- [x] **T04 — QC.** Serves: D2, D7. File: `src/qc.py` (Feature 6 section). DoD: essential checks including the county-set comparison with missing and unexpected counties reported separately. DoD met: check_yearly reports missing and unexpected counties separately (tested).
+- [x] **T05 — Publish.** Serves: D6. File: `src/yearly_precip.py`. DoD: Parquet with metadata (`units`, `population_year`, day definition) and QC JSON written atomically after QC passes; failure writes only the QC JSON and raises. DoD met: Parquet with `population_year` and units in metadata; QC JSON; written after QC.
+- [x] **T06 — Map.** Serves: D9. File: `src/yearly_precip.py`. DoD: PNG with title, colorbar label in mm/day, written only after QC passes; Agg backend. DoD met: PNG with title and mm/day colorbar label; written after QC; viewed.
+- [x] **T07 — Snakefile.** Serves: D10. File: `Snakefile`. DoD: rule `yearly_county_precip` with content-hash params; dry run plans it only when outputs are missing. DoD met: rule with content-hash params (QC sections only); dry run plans nothing once outputs exist.
+- [x] **T08 — Tests.** Serves: AC1–AC3. File: `tests/test_yearly_precip.py` (3 tests). DoD: `pytest` passes, including the 17 existing tests. DoD met: `pytest` 20 passed (17 existing + 3 new).
+- [x] **T09 — Real run and checks.** Serves: AC4–AC8. DoD: 39 rows; days_observed = days_expected = 366; mean × 366 = total; county set equals Feature 2 blocks; PNG viewed; Features 1–5 unchanged; rerun plans nothing. DoD met 2026-10-28: 39 rows; days_observed = days_expected = 366; mean × 366 = total (max diff 2.3e-13); county set equals Feature 2 blocks; Features 1–3 unchanged; Feature 4–5 rebuilt identical; rerun plans nothing.
