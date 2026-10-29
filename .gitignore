@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Project data and generated logs
+data/
+logs/*
+!logs/prompts.md
+.snakemake
+docs-internal/
+.DS_Store
