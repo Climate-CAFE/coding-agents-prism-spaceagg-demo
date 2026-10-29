@@ -1,0 +1,13 @@
+# Hydra entry configuration: composes the path, PRISM, and Census settings.
+defaults:
+  - datapaths
+  - prism_ppt
+  - census
+  - crosswalk
+  - _self_
+
+hydra:
+  run:
+    dir: ${paths.log_dir}/hydra/${now:%Y-%m-%d_%H-%M-%S}
+  job:
+    chdir: false

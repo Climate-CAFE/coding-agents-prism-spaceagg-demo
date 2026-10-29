@@ -1,0 +1,7 @@
+# All data and log locations for the pipeline. Relative paths resolve from the repository root.
+paths:
+  raw_root: data/raw
+  intermediate_root: data/intermediate
+  output_root: data/output
+  metadata_root: data/metadata
+  log_dir: logs

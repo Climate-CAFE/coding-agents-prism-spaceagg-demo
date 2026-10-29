@@ -1,0 +1,19 @@
+# Census block settings. Vintage and state are overridden per Snakemake job.
+census:
+  vintage: 2020
+  state_fips: "53"
+  state_name: Washington
+  base_url: https://www2.census.gov/geo/tiger/TIGER2020/TABBLOCK20/
+  filename: tl_{vintage}_{state_fips}_tabblock20.zip
+  expected_crs: EPSG:4269
+  references: # null or missing entries skip the reference check with a warning
+    "2020":
+      "53":
+        population: 7705281
+        county_count: 39
+  retries: 3
+  backoff_seconds: 2
+  pause_seconds: 0.5
+  timeout_seconds: 300
+  targets: # Snakemake builds one set of outputs per entry
+    - {vintage: 2020, state_fips: "53"}

@@ -1,0 +1,14 @@
+# PRISM 800 m daily precipitation settings.
+prism:
+  base_url: https://data.prism.oregonstate.edu/time_series/us/an/800m/
+  variable: ppt
+  file_prefix: prism_ppt_us_30s_
+  years: [2024]
+  start_date: null # optional ISO date; clips every year to start on or after this day
+  end_date: null # optional ISO date; clips every year to end on or before this day
+  retries: 3
+  backoff_seconds: 2
+  pause_seconds: 0.5
+  timeout_seconds: 60
+  transform_tol: 1.0e-9 # affine coefficient tolerance for raster grid checks
+  stability: not available # set only when an official PRISM source confirms a status

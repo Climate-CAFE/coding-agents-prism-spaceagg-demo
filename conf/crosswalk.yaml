@@ -1,0 +1,8 @@
+# Block–cell crosswalk settings. Vintage and state come from conf/census.yaml.
+crosswalk:
+  fishnet_margin_cells: 2
+  densify_deg: 0.0001
+  area_crs: EPSG:5070
+  min_overlap_m2: 10
+  weight_tol: 1.0e-9
+  low_coverage_threshold: 0.99
