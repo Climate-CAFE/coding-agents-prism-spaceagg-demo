@@ -3,7 +3,7 @@
 ## Approval
 
 - **Status:** approved
-- **Version:** draft 2 (uncommitted)
+- **Version:** draft 2 (committed in d55de3b)
 - **Last changed:** 2026-10-28
 - **Approved by:** project lead, via chat (D1–D8 with changes below)
 - **Approved on:** 2026-10-28
