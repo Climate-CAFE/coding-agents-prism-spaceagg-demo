@@ -1,6 +1,6 @@
 # coding-agents-prism-spaceagg-demo
 
-A reproducible pipeline that turns daily PRISM 800 m precipitation into population-weighted county precipitation, then into annual county summaries. It also documents how AI coding agents were used to build it: `AGENTS.md`, reusable Skills, lightweight specs, automated workflows, and scientific validation.
+A pipeline that turns daily PRISM 800 m precipitation into population-weighted county precipitation, then into annual county summaries. It also documents how AI coding agents were used to build it: `AGENTS.md`, reusable Skills, lightweight specs, automated workflows, and scientific validation.
 
 Demonstration: **Washington State, 2024**, using 2020 Census blocks. The pipeline is configuration-driven, so years, dates, and other states can be added without changing the processing code.
 
